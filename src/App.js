@@ -1,19 +1,38 @@
 import './App.css';
 
-function App() {
-  // Generate array of first 10 natural numbers (1 to 10)
-  const naturalNumbers = Array.from({ length: 10 }, (_, index) => index + 1);
+import React, { useState } from "react";
+
+export default function App() {
+  const [limit, setLimit] = useState("");
+  const [numbers, setNumbers] = useState([]);
+
+  const handleGenerate = () => {
+    const num = parseInt(limit);
+    if (!isNaN(num) && num > 0) {
+      const arr = Array.from({ length: num }, (_, i) => i + 1);
+      setNumbers(arr);
+    } else {
+      setNumbers([]);
+    }
+  };
 
   return (
-    <div className="App">
-      <h1>First 10 Natural Numbers</h1>
+    <div>
+      <h1>Natural Numbers Generator</h1>
+      <input
+        type="number"
+        value={limit}
+        onChange={(e) => setLimit(e.target.value)}
+        placeholder="Enter a number"
+      />
+      <button onClick={handleGenerate}>Generate</button>
+
       <div>
-        {naturalNumbers.map((number) => (
-          <span key={number}>{number} </span>
+        {numbers.map((num, index) => (
+          <span key={index}>{num} </span>
         ))}
       </div>
     </div>
   );
 }
 
-export default App;
